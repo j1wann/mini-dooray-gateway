@@ -22,22 +22,19 @@ public class ProjectService {
 
     public List<Project> findProjectsByUser(String userUuid) {
         String url = apiUrl + "/api/project";
-        // GET 요청이므로 Content-Type 헤더는 필수가 아닙니다. Accept 헤더가 더 적절할 수 있습니다.
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", userUuid); // set 혹은 add 사용
         headers.setAccept(List.of(MediaType.APPLICATION_JSON)); // 서버로부터 JSON 응답을 기대한다고 명시
 
-        // 2. GET 요청이므로 body가 없는 HttpEntity 생성
         HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 
         try {
-            // 3. exchange 메소드 사용
             ResponseEntity<List<Project>> response = restTemplate.exchange(
-                    url, // URL 수정 (아래 설명 참조)
+                    url,
                     HttpMethod.GET,
                     requestEntity,
                     new ParameterizedTypeReference<>() {
-                    } // 4. 응답 타입을 명확히 지정
+                    }
             );
 
             if (response.getStatusCode() == HttpStatus.OK) {
@@ -47,6 +44,6 @@ public class ProjectService {
             log.error("Failed to fetch projects: {}", e.getMessage());
         }
 
-        return Collections.emptyList(); // 에러 발생 또는 실패 시 null 대신 빈 리스트 반환
+        return Collections.emptyList();
     }
 }

@@ -12,9 +12,12 @@
         <h1 class="h3">
             <span th:text="${userName}">사용자</span>님의 프로젝트
         </h1>
-        <button type="button" class="btn btn-primary" onclick="location.href='/projects/new'">
-            + 새 프로젝트 생성
-        </button>
+        <div>
+            <button type="button" class="btn btn-primary me-2" onclick="location.href='/projects/new'">
+                + 새 프로젝트 생성
+            </button>
+            <a href="/api/logout" class="btn btn-danger">로그아웃</a>
+        </div>
     </div>
 
     <div class="card">

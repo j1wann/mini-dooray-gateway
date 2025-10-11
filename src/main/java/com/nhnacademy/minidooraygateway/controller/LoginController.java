@@ -17,7 +17,7 @@ public class LoginController {
     private final LoginService loginService;
 
     @GetMapping("/login")
-    public String loginForm() { // 메서드명 변경 (login -> loginForm)
+    public String loginForm() {
         return "login";
     }
 
@@ -36,5 +36,18 @@ public class LoginController {
         } else {
             return "redirect:/api/login?error=true";
         }
+    }
+
+    @GetMapping("/logout")
+    public String doLogout(HttpSession session) {
+        String uuid = (String) session.getAttribute("uuid");
+
+        if (uuid != null) {
+            loginService.logout(uuid);
+        }
+
+        session.invalidate();
+
+        return "redirect:/api/login";
     }
 }

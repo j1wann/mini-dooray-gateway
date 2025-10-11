@@ -27,6 +27,6 @@ public class ProjectController {
          model.addAttribute("userName", userName);
          model.addAttribute("projects", projects);
 
-        return "projects"; // projects 뷰 반환
+        return "projects";
     }
 }
