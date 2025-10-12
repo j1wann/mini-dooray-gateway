@@ -4,12 +4,12 @@ import com.nhnacademy.minidooraygateway.domain.Project;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.ParameterizedTypeReference; // 1. ParameterizedTypeReference 임포트
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Collections; // Collections 임포트
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -23,8 +23,8 @@ public class ProjectService {
     public List<Project> findProjectsByUser(String userUuid) {
         String url = apiUrl + "/api/project";
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", userUuid); // set 혹은 add 사용
-        headers.setAccept(List.of(MediaType.APPLICATION_JSON)); // 서버로부터 JSON 응답을 기대한다고 명시
+        headers.set("Authorization", userUuid);
+        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
 
         HttpEntity<Void> requestEntity = new HttpEntity<>(headers);
 

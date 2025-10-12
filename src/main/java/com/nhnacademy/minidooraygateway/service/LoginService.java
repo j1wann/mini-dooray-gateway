@@ -1,11 +1,13 @@
 package com.nhnacademy.minidooraygateway.service;
 
 import com.nhnacademy.minidooraygateway.dto.LoginRequestDto;
+import com.nhnacademy.minidooraygateway.dto.RegisterDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 @Service
@@ -53,6 +55,25 @@ public class LoginService {
             log.info("Successfully requested logout from Account API for uuid: {}", uuid);
         } catch (Exception e) {
             log.error("Failed to logout from Account API. Error: {}", e.getMessage());
+        }
+    }
+    public boolean registerUser(RegisterDto registerDTO) {
+        String registerUrl = apiUrl + "/api/register";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<RegisterDto> requestEntity = new HttpEntity<>(registerDTO, headers);
+
+        try {
+            ResponseEntity<Void> response = restTemplate.postForEntity(registerUrl, requestEntity, Void.class);
+            return response.getStatusCode().is2xxSuccessful();
+        } catch (HttpClientErrorException e) {
+            log.error("Registration failed: Status code {}, Body {}", e.getStatusCode(), e.getResponseBodyAsString());
+            return false;
+        } catch (Exception e) {
+            log.error("An unexpected error occurred during registration: {}", e.getMessage());
+            return false;
         }
     }
 }
